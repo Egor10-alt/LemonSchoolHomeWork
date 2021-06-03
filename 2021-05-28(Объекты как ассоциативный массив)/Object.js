@@ -4,21 +4,21 @@
  С помощью методов браузера добавьте ее на страницу со всеми атрибутами, читая значения свойств из созданного объекта.
 */
 
-let image = {
+ let image = {
     src: "https://www.google.com.ua/logos/doodles/2017/bella-akhmadulinas-80th-birthday-5134676388741120.3-law.gif",
-    alt: "",
-    style: "border: 1px solid #ccc",
-    width: "200"
-}
-let elementDiv = document.createElement("div");
-document.querySelector("body").appendChild(elementDiv);
+        alt: "",
+        style: "border: 1px solid #ccc",
+        width: "200"
+    }
+    let elementDiv = document.createElement("div");
+    document.querySelector("body").appendChild(elementDiv);
 
-let elementImage = document.createElement("img");
-elementDiv.appendChild(elementImage);
+    let elementImage = document.createElement("img");
+    elementDiv.appendChild(elementImage);
 
-for (let key in image){
-    elementImage.setAttribute(key,image[key]);
-}
+    for (let key in image){
+        elementImage.setAttribute(key,image[key]);
+    }
 
 
 //Второе задание
@@ -27,23 +27,21 @@ for (let key in image){
  Из prompt читается дата в формате yyyy-MM-dd. Проверьте, попадает ли введенная дата в диапазон дат объекта dates.
 */
 
-let currentDate = new Date();
 let dates = {
-    firstDate: currentDate.setDate(currentDate.getDate()-2),
-    secondDate: currentDate.setFullYear(currentDate.getFullYear()-1)
-};
-let date = new Date(prompt("Введите дату в формате yyyy-MM-dd(где yyyy - это год, MM - это месяц , dd - это день : ",""));
-if (date < dates.firstDate  && date > dates.secondDate){
-    console.log(`${date} попало в диапазон между ${dates.secondDate} и ${dates.firstDate}`);
-}else if(date.getFullYear() % 4 === 0){
-    dates.secondDate = currentDate.setFullYear((currentDate.getFullYear() - 365) - (currentDate.getDate() - 1));
-    if (date > dates.secondDate && date < dates.firstDate){
-        console.log(`${date} попало в диапазон высокосного года между ${new Date(dates.secondDate)} и ${new Date(dates.firstDate)}`);
+    firstDate: new Date().setDate(new Date().getDate()-2),
+    secondDate: new Date().setFullYear(new Date().getFullYear() - 1)
+}
+let enterDate = new Date(prompt("Введите дату (yyyy-MM-dd) где y- это год, M-месяц , d - день",""));
+if (enterDate > dates.secondDate && enterDate < dates.firstDate){
+    console.log("Дата попала в диапазон");
+}else if (enterDate.getFullYear() % 4 === 0){
+    if (enterDate > dates.secondDate && enterDate < dates.firstDate){
+        console.log("Дата попала в диапазон высокостного года");
     }else{
-        console.log(`Эта дата ${date} не попала в диапазон высокосного года между ${new Date(dates.secondDate)} и ${new Date(dates.firstDate)}`);
+        console.log("Дата не попала в диапазон высокостного года");
     }
-}else {
-    console.log(`Эта дата ${date} не попала в диапазон между ${new Date(dates.secondDate)} и ${new Date(dates.firstDate)}`);
+}else{
+    console.log("Дата не попала в диапазон");
 }
 
 
@@ -55,31 +53,46 @@ if (date < dates.firstDate  && date > dates.secondDate){
  Выйти из цикла и закончить проверки можно с помощью клавиши Cancel окна prompt.
 */
 
-let person = {
-    age: "18",
-    height: "195",
-    weight: "85",
-    sex: "male"
-};
-
-let value;
-while(true){
-    let key = prompt("Что вы хотите узнать о пользователе? :" , "age");
-    if(key === null){
-        break;
-    }
-    else if (key in person){
-        console.log(key + ":" + person[key]);
+let propertyForPerson;
+let describePerson;
+let person = {};
+let countPropertyForPerson = +prompt("Введите,какое количество свойств вы хотите добавить персонажу: ","");
+while(Object.keys(person).length < countPropertyForPerson){
+    propertyForPerson= prompt("Введите свойства которые вы ходите создать у этого персонажа: ","");
+    describePerson = prompt("Опишите свойства которые вы довавили персонажу: ","");
+    if (propertyForPerson === null ||describePerson === null){
+        console.log("Введите название свойста и опишите его");
         break;
     }else{
-        value = prompt("Введите значение которое вы хотите присвоить пользователю: ","");
-        if (value === null){
+        person[propertyForPerson] = describePerson;
+        if (Object.keys(person).length === countPropertyForPerson){
             break;
-        }else{
-            person[key] = value;
         }
     }
 }
+while(true){
+    let key = prompt("Введите имя свойства: ","");
+    if (key === null){
+        let resCancel = confirm("Вы хотите отменить введение именя? ")
+        if (resCancel){
+            break;
+        }
+    }else if (key in person){
+        console.log(key + "-" + person[key]);
+    }else{
+        let enterNameOfProperty = prompt("Ввседите имя свойства которое хотите добавить: ");
+        let enterNameOfPropertyValue = prompt("Введите значение для этого свойства: ","");
+        if (enterNameOfProperty === null ||enterNameOfPropertyValue === null ){
+            console.log("Вы не введи данные для добавления");
+            break;
+        }else{
+            person[enterNameOfProperty] = enterNameOfPropertyValue;
+            console.log(enterNameOfProperty + "-" + person[enterNameOfProperty]);
+        }
+
+    }
+}
+console.log(person);
 
 
 //Четвертое задание
@@ -89,12 +102,7 @@ while(true){
   Какое именно свойство удалять или добавлять - также читается из prompt. Какое значение будет у добавленного свойства - тоже берется из prompt.
  При нажатии на Отмена при появлении prompt редактирование person заканчивается. И обновленные данные распечатываются в консоли.
 */
-let person = {
-    age: "18",
-    height: "195",
-    weight: "85",
-    sex: "male"
-};
+
 
 let selection;
 let selectionUpdate;
@@ -142,12 +150,6 @@ while(true){
 Переберите в цикле (for..in) сгенерированный ранее объект person, добавляя dt - для имени свойства и dd - для значения свойства (работа с DOM - с использованием методов Native JS).
 */
 
-let person = {
-    age: "18",
-    height: "195",
-    weight: "85",
-    sex: "male"
-};
 
 let elementDl = document.createElement("dl");
 document.querySelector("body").appendChild(elementDl);
@@ -171,12 +173,6 @@ for (let key in person){
 Добавьте этот гаджет персоне, созданной ранее.
  После этого создайте независимую копию объекта person, не используя встроенный метод Object.assign и JSON.parse, а то есть перебором свойств.
 */
-let person = {
-    age: "18",
-    height: "195",
-    weight: "85",
-    sex: "male"
-};
 
 let objPhone = {};
 let phoneDescription;
@@ -188,7 +184,7 @@ while (true) {
         console.log("Вы нажали на Отмена");
         break;
     }else{
-        objPhone[phoneDescription] = phoneValue;//objPhone[phoneDescription] = phoneValue; - в квадратных скобках находится переменная которая хранит в себе ключ свойства объекта objPhone,а = phoneValue это означает ,что в наше свойство вписывают значение
+        objPhone[phoneDescription] = phoneValue;// переменная phoneDescription которая в квадратных скобках (objPhone[phoneDescription]) создает ключи(свойста) в объекте objPhone при каждой итерации цикла,а переменная phoneValue сохраняет в каждое свойство значение
         if (Object.keys(objPhone).length === 5){//Object.keys возвращает массив всех ключей
             person.phone = objPhone;//Для того чтобы в один объект встроить другой и при этом у нас ключ был вот такой phone.Можно было еще сделать вот так person['objPhone'] = objPhone;
             break;//person.phone = objPhone; это строка означает,что в объекте person мы создаем свойство с ключем под названием phone который будет хранить другой объект.Так же и с этой строкой person['objPhone'] = objPhone; но тут уже ключ будет называться objPhone
@@ -198,7 +194,7 @@ while (true) {
 
 let personCopy = {};
 for (let key in person){
-    personCopy[key] = person[key];//Создаем независимую копию объекта person
+    personCopy[key] = person[key];//Создаем независимую копию объекта person.Переменная key которая в квадратных скобках(personCopy[key])создает в объекте personCopy ключ(свойства) при каждой итерации цикла,а person[key] вызывает уже у себя созданые ключи и вписывает их значение в свойства которые были созданы в объекте personCopy с помощью personCopy[key]
     if (key === "phone"){
         personCopy.phone = {};
         for (let keyPersonCopy in person.phone){
