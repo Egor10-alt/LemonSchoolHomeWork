@@ -17,23 +17,20 @@ function app(){
         }
     }
     let array = [];
-    let elementTr = document.querySelectorAll(".square");
     let elementTd = document.querySelectorAll("td");
-    elementTr.forEach(function (){
-        elementTd.forEach(function (elemTd){
-            elemTd.addEventListener("click",function (){
-                if (elemTd.style.background === "black"){
-                    elemTd.style.background = "white";
-                    if (elemTd.style.background === "white"){
-                        array.splice(array.indexOf(elemTd),1);
-                    }
-                }else{
-                    elemTd.style.background = "black";
-                    if (elemTd.style.background === "black"){
-                        array.push(elemTd);
-                    }
+    elementTd.forEach(function (elemTd){
+        elemTd.addEventListener("click",function (){
+            if (elemTd.style.background === "black"){
+                elemTd.style.background = "white";
+                if (elemTd.style.background === "white"){
+                    array.splice(array.indexOf(elemTd),1);
                 }
-            })
+            }else{
+                elemTd.style.background = "black";
+                if (elemTd.style.background === "black"){
+                    array.push(elemTd);
+                }
+            }
         })
     })
 
